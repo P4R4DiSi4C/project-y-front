@@ -1,4 +1,4 @@
-# PROJECT OMEGA FRONTEND
+# PROJECT Y FRONTEND
 
 ## dev server
 ```sh
