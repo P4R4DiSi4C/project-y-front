@@ -8,7 +8,6 @@ import GlobalStyle from '../../components/GlobalStyle';
 
 
 export default () => {
-    const router = useRoutes(Router);
 
     return (
         <Container>
