@@ -13,8 +13,7 @@ import 'sanitize.css/typography.css';
 
 // theme
 const theme = {
-  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-  fontSize: '13px'
+  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
 };
 
 ReactDOM.render(

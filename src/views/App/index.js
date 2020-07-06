@@ -1,18 +1,22 @@
 // libs
 import React from 'react';
 import Routes from '../../router';
+import Styled from 'styled-components';
 
 // components
-import Container from '../../components/Container';
 import GlobalStyle from '../../components/GlobalStyle';
 
 
 export default () => {
 
     return (
-        <Container>
+        <Layout>
             <GlobalStyle />
             <Routes />
-        </Container>
+        </Layout>
     );
 };
+
+const Layout = Styled.div`
+  height:100vh;
+`;

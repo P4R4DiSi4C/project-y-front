@@ -8,8 +8,8 @@
     "react-dom": "16.13.1",
     "react-scripts": "^3.4.1",
     "rsuite": "^4.7.5",
-    "sanitize.css": "11.0.1",
-    "styled-components": "5.1.1"
+    "sanitize.css": "^11.0.1",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

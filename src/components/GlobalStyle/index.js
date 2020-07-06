@@ -2,7 +2,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-    html {
+    * {
         font-family: ${props => props.theme.textFont};
         font-size: 16px;
         @media (max-width: 1199.98px) {
