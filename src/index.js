@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 // components
 import App from './views/App';
+import { Grommet } from 'grommet';
 
 // style
 import 'sanitize.css';
@@ -13,12 +14,19 @@ import 'sanitize.css/typography.css';
 
 // theme
 const theme = {
-  fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
+    global: {
+        colors: {
+            brand: '#F2F2F2 ',
+        }
+    },
+    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
 };
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App />
+      <Grommet theme={theme} full>
+            <App />
+        </Grommet>
   </ThemeProvider>,
   document.getElementById('root')
 );

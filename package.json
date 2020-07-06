@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "grommet": "^2.14.0",
+    "grommet-icons": "^4.4.0",
     "raviger": "^1.4.3",
     "react": "^16.13.1",
     "react-dom": "16.13.1",
