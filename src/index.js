@@ -1,7 +1,6 @@
 // libs
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'styled-components';
 
 // components
 import App from './views/App';
@@ -18,15 +17,13 @@ const theme = {
         colors: {
             brand: '#F2F2F2 ',
         }
-    },
-    fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
+    }
 };
 
+
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-      <Grommet theme={theme} full>
+    <Grommet theme={theme} full>
             <App />
-        </Grommet>
-  </ThemeProvider>,
+    </Grommet>,
   document.getElementById('root')
 );
