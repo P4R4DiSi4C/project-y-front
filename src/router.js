@@ -8,7 +8,7 @@ import Dashboard from './views/Dashboard';
 
 
 const routes = {
-  '/dashboard': () => <Dashboard />
+  '/dashboard*': () => <Dashboard />
 };
 
 const Routes = () => {

@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 // components
 import App from './views/App';
 import { Grommet } from 'grommet';
+import {ThemeProvider} from 'styled-components';
 
 // style
 import 'sanitize.css';
@@ -16,14 +17,19 @@ const theme = {
     global: {
         colors: {
             brand: '#F2F2F2 ',
+            bg_main: '#DADADA'
         }
+    },
+    styled: {
+        font: '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
     }
 };
 
-
 ReactDOM.render(
-    <Grommet theme={theme} full>
+    <ThemeProvider theme={theme}>
+        <Grommet theme={theme} full>
             <App />
-    </Grommet>,
+        </Grommet>
+    </ThemeProvider>,
   document.getElementById('root')
 );
