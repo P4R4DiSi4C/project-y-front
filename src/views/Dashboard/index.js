@@ -8,7 +8,7 @@ import DashCalendar from './Calendar';
 import DashApprovals from './Approvals';
 
 // components
-import { Grid, ThemeContext, Box, Nav, Button, Sidebar, Avatar, Main } from 'grommet';
+import { Grid, Box, Nav, Button, Sidebar, Avatar, Main } from 'grommet';
 import { User, MapLocation, Help, Projects, Validate, Configure, Calendar } from 'grommet-icons';
 
 const routes = {
@@ -33,24 +33,19 @@ export default () => {
       gap={{ column: "1rem" }}>
 
 
-      <ThemeContext.Extend
-        value={
-          { global: { edgeSize: { small: '18px' } } }
-        }>
         <Sidebar
           gridArea="sidebar"
           width="xsmall"
           justify="center"
           align="center"
-          elevation="large"
-          background="brand"
+          background="background_comp"
           round="small"
-          margin={{ "right": "1rem" }}
+          border={{ color: 'border', size: 'xsmall' }}
           header={
             <>
-              <Avatar border={{ size: "small", color: "accent-2" }} background="white">
-                Y
-                            </Avatar>
+              <Avatar border={{ size: "small", color: "brand" }} background="white">
+                    Y
+                </Avatar>
             </>
           }
           footer={
@@ -77,16 +72,15 @@ export default () => {
             </Box>
           </Nav>
         </Sidebar>
-      </ThemeContext.Extend>
 
       <Main
         direction="row-responsive"
         gridArea="main"
-        elevation="large"
-        background="brand"
+        background="background_comp"
         round="small"
         pad="medium"
         justify="between"
+        border={{ color: 'border', size: 'xsmall' }}
       >
         {routesResult}
       </Main>

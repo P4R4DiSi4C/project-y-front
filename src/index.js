@@ -16,8 +16,11 @@ import 'sanitize.css/typography.css';
 const theme = {
     global: {
         colors: {
-            brand: '#F2F2F2 ',
-            bg_main: '#DADADA'
+            brand: '#598dff ',
+            background:'#fafbf8',
+            background_comp:'#ffffff',
+            border:'#e9e9e8',
+            focus: "brand",
         }
     },
     styled: {

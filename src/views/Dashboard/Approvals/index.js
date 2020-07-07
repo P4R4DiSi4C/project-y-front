@@ -10,7 +10,6 @@ export default () => {
         <Box
             fill
             direction="column"
-            background="bg_main"
             round="small"
             >
         </Box>

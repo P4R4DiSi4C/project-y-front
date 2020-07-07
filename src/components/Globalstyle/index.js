@@ -14,6 +14,13 @@ export const GlobalStyles = createGlobalStyle`
         @media (max-width: 325.00px) {
             font-size: 12px;
         }
+
+        &::-webkit-scrollbar {
+            display: none;
+            -webkit-appearance: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;  
     }
 
 `;
