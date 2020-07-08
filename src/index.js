@@ -21,6 +21,9 @@ const theme = {
             background_comp:'#ffffff',
             border:'#e9e9e8',
             focus: "brand",
+            icon: {
+              light: '#000000',
+            }
         }
     },
     styled: {

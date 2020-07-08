@@ -51,7 +51,7 @@ export default () => {
           footer={
             <>
               <Nav gap="small">
-                <Button size="large" icon={<Configure />} hoverIndicator />
+                <Button icon={<Configure />} hoverIndicator />
                 <Button icon={<Help />} hoverIndicator />
               </Nav>
             </>
