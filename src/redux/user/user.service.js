@@ -1,2 +1,1 @@
 import instance from 'axios';
-

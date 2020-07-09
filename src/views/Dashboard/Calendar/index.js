@@ -5,14 +5,9 @@ import React from 'react';
 import { Box } from 'grommet';
 
 export default () => {
-  return (
-      <>
-        <Box
-            fill
-            direction="column"
-            round="small"
-            >
-        </Box>
-    </>
-  );
+	return (
+		<>
+			<Box fill direction='column' round='small'></Box>
+		</>
+	);
 };
