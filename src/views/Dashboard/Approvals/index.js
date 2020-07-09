@@ -1,5 +1,6 @@
 // libs
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // components
 import { Box, Heading, List, Menu, Text } from 'grommet';
@@ -10,6 +11,10 @@ import { Grommet, More, Checkmark, Close, Edit } from 'grommet-icons';
 
 export default () => {
   const [selected, setSelected] = React.useState();
+
+  const user = useSelector(state => state.user);
+
+  console.log(user);
 
   return (
     <>

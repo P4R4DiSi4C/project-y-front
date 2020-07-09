@@ -1,16 +1,20 @@
 // libs
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Grommet } from 'grommet';
+import {ThemeProvider} from 'styled-components';
 
 // components
 import App from './views/App';
-import { Grommet } from 'grommet';
-import {ThemeProvider} from 'styled-components';
+
 
 // style
 import 'sanitize.css';
 import 'sanitize.css/forms.css';
 import 'sanitize.css/typography.css';
+
+import store from "./redux/store";
 
 // theme
 const theme = {
@@ -34,7 +38,9 @@ const theme = {
 ReactDOM.render(
     <ThemeProvider theme={theme}>
         <Grommet theme={theme} full>
-            <App />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </Grommet>
     </ThemeProvider>,
   document.getElementById('root')

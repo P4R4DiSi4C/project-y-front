@@ -1,5 +1,5 @@
 // libs
-import React from 'react';
+import React, { useEffect } from 'react';
 import { navigate, useRoutes } from 'raviger';
 
 // subroutes
@@ -11,6 +11,10 @@ import DashApprovals from './Approvals';
 import { Grid, Box, Nav, Button, Sidebar, Avatar, Main } from 'grommet';
 import { User, MapLocation, Help, Projects, Validate, Configure, Calendar } from 'grommet-icons';
 
+import { useDispatch } from 'react-redux';
+
+import { signIn } from '../../redux/user/user.actions';
+
 const routes = {
   '/': () => <DashHome />,
   '/calendar': () => <DashCalendar />,
@@ -19,6 +23,12 @@ const routes = {
 
 export default () => {
   const routesResult = useRoutes(routes, { basePath: '/dashboard'});
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(signIn('email', 'password'));
+  });
 
   return (
     <Grid
