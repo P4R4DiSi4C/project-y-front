@@ -1,18 +1,20 @@
-import { LOGIN_REQUEST } from './user.constants';
+import { SUCCESS, ERROR, CLEAR } from './alert.constants';
 
 const initialState = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  token: '',
+  type: '',
+  message: '',
 };
 
 export default (state = initialState, action) => {
   const { payload } = action;
-  switch (action.type) {
-    case LOGIN_REQUEST:
-      return { ...state, ...payload };
 
+  switch (action.type) {
+    case SUCCESS:
+      return { ...state, ...payload };
+    case ERROR:
+      return { ...state, ...payload };
+    case CLEAR:
+      return initialState;
     default:
       return state;
   }
