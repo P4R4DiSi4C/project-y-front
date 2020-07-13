@@ -1,28 +1,37 @@
-import { SUCCESS, ERROR, CLEAR } from './alert.constants';
+import { toast } from 'react-toastify';
+import { ALERT_SUCCESS, ALERT_ERROR, ALERT_CLEAR } from './alert.constants';
 
-export const alert_success = (message) => {
-  return {
-    type: SUCCESS,
+export const alert_success = (message) => (dispatch) => {
+  dispatch({
+    type: ALERT_SUCCESS,
     payload: {
-      type: 'alert-success',
+      type: ALERT_SUCCESS,
       message: message,
     },
-  };
+  });
+
+  toast.success(message, {
+    onClose: () => dispatch(alert_clear()),
+  });
 };
 
-export const alert_error = (message) => {
-  return {
-    type: ERROR,
+export const alert_error = (message) => (dispatch) => {
+  dispatch({
+    type: ALERT_ERROR,
     payload: {
-      type: 'alert-error',
+      type: ALERT_ERROR,
       message: message,
     },
-  };
+  });
+
+  toast.error(message, {
+    onClose: () => dispatch(alert_clear()),
+  });
 };
 
-export const alert_clear = () => {
-  return {
-    type: CLEAR,
+export const alert_clear = () => (dispatch) => {
+  dispatch({
+    type: ALERT_CLEAR,
     payload: {},
-  };
+  });
 };

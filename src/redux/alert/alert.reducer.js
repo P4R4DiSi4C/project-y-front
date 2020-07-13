@@ -1,4 +1,4 @@
-import { SUCCESS, ERROR, CLEAR } from './alert.constants';
+import { ALERT_SUCCESS, ALERT_ERROR, ALERT_CLEAR } from './alert.constants';
 
 const initialState = {
   type: '',
@@ -9,11 +9,11 @@ export default (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
-    case SUCCESS:
+    case ALERT_SUCCESS:
       return { ...state, ...payload };
-    case ERROR:
+    case ALERT_ERROR:
       return { ...state, ...payload };
-    case CLEAR:
+    case ALERT_CLEAR:
       return initialState;
     default:
       return state;
