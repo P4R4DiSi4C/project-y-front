@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, USER_CLEAR } from './user.constants';
+import { LOGIN_REQUEST, USER_CLEAR, SET_USER_STATE } from './user.constants';
 
 const initialState = {
   email: '',

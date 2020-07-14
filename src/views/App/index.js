@@ -1,10 +1,16 @@
 // libs
 import React from 'react';
-import Routes from '../../router';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+// routes
+import Routes from '../../router';
+
+// redux
+import { setUserState } from '../../redux/user/user.actions';
+
+// globalstyle
 import { GlobalStyles } from '../../components/Globalstyle';
 
 export default () => {
