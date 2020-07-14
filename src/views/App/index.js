@@ -1,5 +1,6 @@
 // libs
 import React from 'react';
+import { setAxiosUserToken } from '../../axios';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -15,9 +16,10 @@ import { GlobalStyles } from '../../components/Globalstyle';
 
 export default () => {
   const dispatch = useDispatch();
-
-  if (localStorage.getItem('user')) {
-    dispatch(setUserState(JSON.parse(localStorage.getItem('user'))));
+  const user = localStorage.getItem('user');
+  if (user) {
+    setAxiosUserToken(JSON.parse(user).token);
+    dispatch(setUserState(JSON.parse(user)));
   }
 
   return (

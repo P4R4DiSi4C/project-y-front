@@ -25,4 +25,8 @@ instance.interceptors.response.use(
   }
 );
 
+export const setAxiosUserToken = (token) => {
+  axios.defaults.headers.common['Authorization'] = token;
+};
+
 export default instance;
