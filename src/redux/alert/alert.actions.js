@@ -31,7 +31,6 @@ export const alertError = message => dispatch => {
 
 export const alertClear = () => dispatch => {
   dispatch({
-    type: ALERT_CLEAR,
-    payload: {}
+    type: ALERT_CLEAR
   });
 };

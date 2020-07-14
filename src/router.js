@@ -3,13 +3,16 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useRoutes } from 'raviger';
 
+// components
+import PrivateRoute from './components/PrivateRoute';
+
 // views
 import Home from './views/Home';
 import Dashboard from './views/Dashboard';
 
 const routes = {
 	'/': () => <Home />,
-	'/dashboard*': () => <Dashboard />,
+	'/dashboard*': () => <PrivateRoute component={Dashboard} />,
 };
 
 const Routes = () => {

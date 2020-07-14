@@ -4,37 +4,36 @@ import { LOGIN_REQUEST, USER_CLEAR, SET_USER_STATE } from './user.constants';
 import { navigate } from 'raviger';
 
 export const signUp = (user) => async (dispatch) => {
-  await userService.signUp(user);
+	await userService.signUp(user);
 
-  dispatch(alertSuccess('Inscription réussie'));
+	dispatch(alertSuccess('Inscription réussie'));
 };
 
 export const signIn = (user) => async (dispatch) => {
-  const response = await userService.signIn(user);
+	const response = await userService.signIn(user);
 
-  dispatch({
-    type: LOGIN_REQUEST,
-    payload: response,
-  });
-  dispatch(alertSuccess('Connexion réussie'));
-  localStorage.setItem('user', JSON.stringify(response));
-  navigate('/dashboard');
+	dispatch({
+		type: LOGIN_REQUEST,
+		payload: response,
+	});
+	dispatch(alertSuccess('Connexion réussie'));
+	localStorage.setItem('user', JSON.stringify(response));
+	navigate('/dashboard');
 };
 
 export const logOut = () => async (dispatch) => {
-  localStorage.removeItem('user');
+	localStorage.removeItem('user');
 
-  dispatch({
-    type: USER_CLEAR,
-    payload: {},
-  });
+	dispatch({
+		type: USER_CLEAR,
+	});
 
-  navigate('/');
+	navigate('/');
 };
 
 export const setUserState = (user) => async (dispatch) => {
-  dispatch({
-    type: SET_USER_STATE,
-    payload: user,
-  });
+	dispatch({
+		type: SET_USER_STATE,
+		payload: user,
+	});
 };
