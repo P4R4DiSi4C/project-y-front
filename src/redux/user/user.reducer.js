@@ -1,10 +1,10 @@
-import { LOGIN_REQUEST } from './user.constants';
+import { LOGIN_REQUEST, USER_CLEAR } from './user.constants';
 
 const initialState = {
   email: '',
   firstName: '',
   lastName: '',
-  token: '',
+  token: ''
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +12,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return { ...state, ...payload };
+
+    case SET_USER_STATE:
+      return { ...state, ...payload };
+
+    case USER_CLEAR:
+      return initialState;
 
     default:
       return state;
