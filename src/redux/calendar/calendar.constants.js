@@ -1,0 +1,2 @@
+export const ADD_CALENDAR = 'ADD_CALENDAR';
+export const CALENDAR_CLEAR = 'CALENDAR_CLEAR';

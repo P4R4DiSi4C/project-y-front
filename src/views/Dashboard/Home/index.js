@@ -1,14 +1,29 @@
 // libs
-import React from 'react';
+import React, { useState } from 'react';
+
+// redux
+import { useDispatch } from 'react-redux';
+import { addCalendar } from '../../../redux/calendar/calendar.actions';
 
 // components
-import { Box, Button, Heading, Layer, List, Text } from 'grommet';
+import {
+  Box,
+  Button,
+  FormField,
+  Heading,
+  Layer,
+  List,
+  Text,
+  TextInput,
+} from 'grommet';
 
-import { MapLocation, Add } from 'grommet-icons';
+import { MapLocation, Add, Close } from 'grommet-icons';
 
 export default () => {
   const [selected, setSelected] = React.useState();
   const [addCalModal, setAddCalModal] = React.useState();
+  const [calName, setCalName] = useState('');
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -122,29 +137,34 @@ export default () => {
                 onClickOutside={() => setAddCalModal(false)}
                 onEsc={() => setAddCalModal(false)}
               >
-                <Box pad='medium' gap='small' width='medium'>
-                  <Heading level={3} margin='none'>
-                    Ajouter un calendrier
-                  </Heading>
-                  <Text>Are you sure you want to delete?</Text>
-                  <Box
-                    as='footer'
-                    gap='small'
-                    direction='row'
-                    align='center'
-                    justify='end'
-                    pad={{ top: 'medium', bottom: 'small' }}
-                  >
+                <Box
+                  pad='medium'
+                  width='large'
+                  as='form'
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    dispatch(addCalendar(calName));
+                  }}
+                >
+                  <Box flex={false} direction='row' justify='between'>
+                    <Heading level={2} margin='none'>
+                      Ajouter un calendrier
+                    </Heading>
                     <Button
-                      label={
-                        <Text color='white'>
-                          <strong>Delete</strong>
-                        </Text>
-                      }
+                      icon={<Close />}
                       onClick={() => setAddCalModal(false)}
-                      primary
-                      color='status-critical'
                     />
+                  </Box>
+                  <Box flex='grow' overflow='auto' pad={{ vertical: 'medium' }}>
+                    <FormField label='Nom du calendrier'>
+                      <TextInput
+                        value={calName}
+                        onChange={(event) => setCalName(event.target.value)}
+                      />
+                    </FormField>
+                  </Box>
+                  <Box flex={false} as='footer' align='center'>
+                    <Button type='submit' label='Ajouter' />
                   </Box>
                 </Box>
               </Layer>
