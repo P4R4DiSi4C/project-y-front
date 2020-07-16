@@ -10,9 +10,11 @@ import PrivateRoute from './components/PrivateRoute';
 import Home from './views/Home';
 import Dashboard from './views/Dashboard';
 import Client from './views/Client';
+import Auth from './views/Auth';
 
 const routes = {
   '/': () => <Home />,
+  '/auth': () => <Auth />,
   '/dashboard*': () => <PrivateRoute component={Dashboard} />,
   '/client': () => <Client />
 };
