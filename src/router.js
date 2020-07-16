@@ -9,17 +9,19 @@ import PrivateRoute from './components/PrivateRoute';
 // views
 import Home from './views/Home';
 import Dashboard from './views/Dashboard';
+import Client from './views/Client';
 
 const routes = {
-	'/': () => <Home />,
-	'/dashboard*': () => <PrivateRoute component={Dashboard} />,
+  '/': () => <Home />,
+  '/dashboard*': () => <PrivateRoute component={Dashboard} />,
+  '/client': () => <Client />
 };
 
 const Routes = () => {
-	const Routes = useRoutes(routes);
-	useEffect(() => window.scrollTo(0, 0));
+  const Routes = useRoutes(routes);
+  useEffect(() => window.scrollTo(0, 0));
 
-	return Routes || 'Not Found';
+  return Routes || 'Not Found';
 };
 
 export default Routes;
