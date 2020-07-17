@@ -14,32 +14,32 @@ import DashApprovals from './Approvals';
 const routes = {
   '/': () => <DashHome />,
   '/calendar': () => <DashCalendar />,
-  '/approvals': () => <DashApprovals />
+  '/approvals': () => <DashApprovals />,
 };
 
-export default () => {
-  const routesResult = useRoutes(routes, { basePath: '/dashboard' });
+export default ({ company }) => {
+  const routesResult = useRoutes(routes, { basePath: company });
   return (
     <Grid
       fill
-      pad="small"
+      pad='small'
       rows={['auto', 'flex']}
       columns={['auto', 'flex']}
       areas={[
         { name: 'sidebar', start: [0, 1], end: [0, 1] },
-        { name: 'main', start: [1, 1], end: [1, 1] }
+        { name: 'main', start: [1, 1], end: [1, 1] },
       ]}
       gap={{ column: '1rem' }}
     >
-      <SideBar />
+      <SideBar company={company} />
 
       <Main
-        direction="row-responsive"
-        gridArea="main"
-        background="background_comp"
-        round="small"
-        pad="medium"
-        justify="between"
+        direction='row-responsive'
+        gridArea='main'
+        background='background_comp'
+        round='small'
+        pad='medium'
+        justify='between'
         border={{ color: 'border', size: 'xsmall' }}
       >
         {routesResult}

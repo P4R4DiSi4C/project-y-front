@@ -15,8 +15,10 @@ import Auth from './views/Auth';
 const routes = {
   '/': () => <Home />,
   '/auth': () => <Auth />,
-  '/dashboard*': () => <PrivateRoute component={Dashboard} />,
-  '/client': () => <Client />
+  '/:company/client': (company) => <Client company={company.company} />,
+  '/:company*': (company) => (
+    <PrivateRoute company={'/' + company.company} component={Dashboard} />
+  ),
 };
 
 const Routes = () => {

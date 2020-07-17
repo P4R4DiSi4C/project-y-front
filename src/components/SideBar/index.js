@@ -11,57 +11,57 @@ import {
   Projects,
   Validate,
   Configure,
-  Calendar
+  Calendar,
 } from 'grommet-icons';
 
-export default () => {
+export default ({ company }) => {
   return (
     <Sidebar
-      gridArea="sidebar"
-      width="xsmall"
-      justify="center"
-      align="center"
-      background="background_comp"
-      round="small"
+      gridArea='sidebar'
+      width='xsmall'
+      justify='center'
+      align='center'
+      background='background_comp'
+      round='small'
       border={{ color: 'border', size: 'xsmall' }}
       header={
         <>
-          <Avatar border={{ size: 'small', color: 'brand' }} background="white">
+          <Avatar border={{ size: 'small', color: 'brand' }} background='white'>
             Y
           </Avatar>
         </>
       }
       footer={
         <>
-          <Nav gap="small">
+          <Nav gap='small'>
             <Button icon={<Configure />} hoverIndicator />
             <Button icon={<Help />} hoverIndicator />
           </Nav>
         </>
       }
     >
-      <Nav gap="small">
+      <Nav gap='small'>
         <Button
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate(company)}
           icon={<Projects />}
           hoverIndicator
         />
         <Button
-          onClick={() => navigate('/dashboard/calendar')}
+          onClick={() => navigate(company + '/calendar')}
           icon={<Calendar />}
           hoverIndicator
         />
         <Button
-          onClick={() => navigate('/dashboard/approvals')}
+          onClick={() => navigate(company + '/approvals')}
           icon={<Validate />}
           hoverIndicator
         />
         <Box
-          pad="small"
+          pad='small'
           border={{ color: 'white', side: 'bottom' }}
           hoverIndicator
         />
-        <Box gap="small" pad={{ vertical: 'medium' }} hoverIndicator>
+        <Box gap='small' pad={{ vertical: 'medium' }} hoverIndicator>
           <Button icon={<MapLocation />} hoverIndicator />
           <Button icon={<User />} hoverIndicator />
         </Box>

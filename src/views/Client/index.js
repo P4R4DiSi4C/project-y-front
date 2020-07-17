@@ -8,7 +8,7 @@ import {
   FormField,
   Button,
   TextInput,
-  Heading
+  Heading,
 } from 'grommet';
 
 const CLIENT_FIELDS = {
@@ -16,18 +16,18 @@ const CLIENT_FIELDS = {
   password: '',
   firstName: '',
   lastName: '',
-  date: ''
+  date: '',
 };
 
-export default () => {
+export default ({ company }) => {
   const [client_reg, setClientReg] = useState(CLIENT_FIELDS);
-
+  alert(company);
   return (
     <Box flex fill justify='center' align='center' direction='column'>
       <Box
         as='form'
         value={client_reg}
-        onChange={newValue => {
+        onChange={(newValue) => {
           setClientReg(newValue);
         }}
         background='background_comp'
@@ -54,7 +54,7 @@ export default () => {
               { fixed: '@' },
               { regexp: /^[\w]+$/, placeholder: 'gmail' },
               { fixed: '.' },
-              { regexp: /^[\w]+$/, placeholder: 'com' }
+              { regexp: /^[\w]+$/, placeholder: 'com' },
             ]}
           />
         </FormField>
