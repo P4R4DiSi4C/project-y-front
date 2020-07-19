@@ -13,19 +13,17 @@ import Client from './views/Client';
 import Auth from './views/Auth';
 
 const routes = {
-  '/': () => <Home />,
-  '/auth': () => <Auth />,
-  '/:company/client': (company) => <Client company={company.company} />,
-  '/:company*': (company) => (
-    <PrivateRoute company={'/' + company.company} component={Dashboard} />
-  ),
+	'/auth': () => <Auth />,
+	'/dashboard*': () => <PrivateRoute component={Dashboard} />,
+	'/:uuid': (uuid) => <Client uuid={uuid.uuid} />,
+	'/': () => <Home />,
 };
 
 const Routes = () => {
-  const Routes = useRoutes(routes);
-  useEffect(() => window.scrollTo(0, 0));
+	const Routes = useRoutes(routes);
+	useEffect(() => window.scrollTo(0, 0));
 
-  return Routes || 'Not Found';
+	return Routes || 'Not Found';
 };
 
 export default Routes;
