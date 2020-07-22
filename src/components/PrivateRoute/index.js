@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'raviger';
 
 export default ({ component: Component }) => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
 
   // CHECK IF COMPANY EXISTS + IF USER HAS RIGHTS
   if (user.token.length <= 0) {
