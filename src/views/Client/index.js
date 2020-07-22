@@ -1,5 +1,6 @@
 // libs
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import instance from '../../axios';
 
 // components
 import {
@@ -13,6 +14,7 @@ import {
 } from 'grommet';
 
 import DateTimeDrop from '../../components/DateTimeDrop';
+import { navigate } from 'raviger';
 
 const CLIENT_FIELDS = {
   email: '',
@@ -26,6 +28,25 @@ const CLIENT_FIELDS = {
 
 export default ({ uuid }) => {
   const [client_reg, setClientReg] = useState(CLIENT_FIELDS);
+
+  const [calendar, setCalendar] = useState({
+    name: ''
+  });
+
+  const fetch = useCallback(async (uuid) => {
+    const response = await instance.get('/calendar/' + uuid);
+
+    return response;
+  }, []);
+
+  useEffect(() => {
+    fetch(uuid)
+      .then(response => {
+        setCalendar(response);
+      }).catch(error => {
+        navigate('/');
+      });
+  }, [uuid, fetch]);
 
   return (
     <Box flex fill justify='center' align='center' direction='column'>

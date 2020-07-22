@@ -6,7 +6,6 @@ import { navigate } from 'raviger';
 import { setAxiosUserToken } from '../../axios';
 
 export const signUp = (user) => async (dispatch) => {
-	console.log(user);
 	await userService.signUp(user);
 
 	dispatch(alertSuccess('Inscription réussie'));
