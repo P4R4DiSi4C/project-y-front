@@ -9,9 +9,10 @@ import {
   FormField,
   Button,
   TextInput,
-  Heading,
-  DateInput,
+  Heading
 } from 'grommet';
+
+import DateTimeDrop from '../../components/DateTimeDrop';
 
 const CLIENT_FIELDS = {
   email: '',
@@ -20,7 +21,7 @@ const CLIENT_FIELDS = {
   lastName: '',
   date: new Date().toISOString(),
   time_start: '',
-  time_end: '',
+  time_end: ''
 };
 
 export default ({ uuid }) => {
@@ -40,24 +41,79 @@ export default ({ uuid }) => {
         <Form
           as='form'
           value={client_reg}
-          onChange={(newValue) => {
+          onChange={newValue => {
             setClientReg(newValue);
           }}
         >
           <Heading level={3} margin={{ vertical: '6px', horizontal: '12px' }}>
             Nouveau rendez-vous
           </Heading>
-          <FormField name='date' label='Date'>
-            <DateInput name='date' format='dd/mm/yyyy' />
-          </FormField>
-          <Box direction='row' justify='between'>
+          {/* <FormField name='date' label='Date'> */}
+          {/* <DateInput name='date' format='dd/mm/yyyy' /> */}
+          <DateTimeDrop state={client_reg} setClientReg={setClientReg} />
+          {/* </FormField> */}
+          {/* <Box direction='row' justify='between'>
             <FormField name='time_start' label='Début'>
-              <TextInput name='time_start' />
+              <MaskedInput
+                name='time_start'
+                mask={[
+                  {
+                    length: [1, 2],
+                    options: [
+                      '08',
+                      '09',
+                      '10',
+                      '11',
+                      '13',
+                      '14',
+                      '15',
+                      '16',
+                      '17'
+                    ],
+                    regexp: /^1[1-2]$|^[0-9]$/,
+                    placeholder: 'hh'
+                  },
+                  { fixed: ':' },
+                  {
+                    length: 2,
+                    options: ['00', '05', '15', '30', '45'],
+                    regexp: /^[0-5][0-9]$|^[0-9]$/,
+                    placeholder: 'mm'
+                  }
+                ]}
+              />
             </FormField>
             <FormField name='time_end' label='Fin'>
-              <TextInput name='time_end' />
+              <MaskedInput
+                name='time_end'
+                mask={[
+                  {
+                    length: [1, 2],
+                    options: [
+                      '8',
+                      '9',
+                      '10',
+                      '11',
+                      '13',
+                      '14',
+                      '15',
+                      '16',
+                      '17'
+                    ],
+                    regexp: /^1[1-2]$|^[0-9]$/,
+                    placeholder: 'hh'
+                  },
+                  { fixed: ':' },
+                  {
+                    length: 2,
+                    options: ['00', '05', '15', '30', '45'],
+                    regexp: /^[0-5][0-9]$|^[0-9]$/,
+                    placeholder: 'mm'
+                  }
+                ]}
+              />
             </FormField>
-          </Box>
+          </Box> */}
           <FormField label='Prénom' name='firstName'>
             <TextInput name='firstName' />
           </FormField>
@@ -72,7 +128,7 @@ export default ({ uuid }) => {
                 { fixed: '@' },
                 { regexp: /^[\w]+$/, placeholder: 'gmail' },
                 { fixed: '.' },
-                { regexp: /^[\w]+$/, placeholder: 'com' },
+                { regexp: /^[\w]+$/, placeholder: 'com' }
               ]}
             />
           </FormField>
