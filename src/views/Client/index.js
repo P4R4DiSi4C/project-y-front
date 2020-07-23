@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import instance from '../../axios';
 import moment from 'moment';
+import * as appointmentService from '../../redux/appointment/appointment.service';
 
 // components
 import {
@@ -25,7 +26,7 @@ const AddAppointment = async appointment => {
     .toISOString();
 
   try {
-    await instance.post('/appointment', {
+    await appointmentService.add({
       firstName,
       lastName,
       calendar: uuid,

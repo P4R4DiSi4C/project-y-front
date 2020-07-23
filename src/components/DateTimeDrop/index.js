@@ -37,14 +37,14 @@ const DropContent = ({ state, setAppointment }) => {
             {
               length: [1, 2],
               options: ['08', '09', '10', '11', '13', '14', '15', '16', '17'],
-              regexp: /^1[1-2]$|^[0-9]$/,
+              regexp: /^0[8-9]|1[0-7]$/,
               placeholder: 'hh'
             },
             { fixed: ':' },
             {
               length: 2,
               options: ['00', '05', '15', '30', '45'],
-              regexp: /^[0-5][0-9]$|^[0-9]$/,
+              regexp: /^0[0,5]|15|30|45$/,
               placeholder: 'mm'
             }
           ]}
@@ -72,8 +72,8 @@ export default ({ state, setAppointment }) => {
           <Text color={state.date ? undefined : 'dark-5'}>
             {state.date
               ? `${new Date(state.date).toLocaleDateString()} ${
-                  state.timeStart
-                }`
+              state.timeStart
+              }`
               : 'Date et heure'}
           </Text>
           <Schedule />
