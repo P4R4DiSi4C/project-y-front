@@ -1,6 +1,7 @@
 // libs
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import instance from '../../axios';
+import moment from 'moment';
 
 // components
 import {
@@ -16,148 +17,108 @@ import {
 import DateTimeDrop from '../../components/DateTimeDrop';
 import { navigate } from 'raviger';
 
-const CLIENT_FIELDS = {
-  email: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-  date: new Date().toISOString(),
-  time_start: '',
-  time_end: ''
+const AddAppointment = async appointment => {
+  const { firstName, lastName, uuid, email } = { ...appointment };
+  const [hour, minute] = appointment.timeStart.split(':');
+  const start = moment(appointment.date)
+    .set({ hour, minute })
+    .toISOString();
+
+  try {
+    await instance.post('/appointment', {
+      firstName,
+      lastName,
+      calendar: uuid,
+      email,
+      start,
+      description: 'test'
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default ({ uuid }) => {
-  const [client_reg, setClientReg] = useState(CLIENT_FIELDS);
+  const APPOINTMENT_FIELDS = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    date: '',
+    timeStart: '',
+    uuid
+  };
 
+  const [appointment, setAppointment] = useState(APPOINTMENT_FIELDS);
   const [calendar, setCalendar] = useState({
     name: ''
   });
 
-  const fetch = useCallback(async (uuid) => {
-    const response = await instance.get('/calendar/' + uuid);
-
-    return response;
-  }, []);
-
   useEffect(() => {
-    fetch(uuid)
-      .then(response => {
+    async function fetchCalendarName() {
+      try {
+        const response = await instance.get('/calendar/' + uuid);
+
         setCalendar(response);
-      }).catch(error => {
+      } catch (error) {
         navigate('/');
-      });
-  }, [uuid, fetch]);
+      }
+    }
+
+    fetchCalendarName(uuid);
+  }, [uuid]);
 
   return (
-    <Box flex fill justify='center' align='center' direction='column'>
-      <Box
-        background='background_comp'
-        round='small'
-        pad='medium'
-        border={{ color: 'border', size: 'xsmall' }}
-        elevation='small'
-        width={{ min: '30%' }}
-        align='center'
-      >
-        <Form
-          as='form'
-          value={client_reg}
-          onChange={newValue => {
-            setClientReg(newValue);
-          }}
+    calendar.name.length > 0 && (
+      <Box flex fill justify='center' align='center' direction='column'>
+        <Box
+          background='background_comp'
+          round='small'
+          pad='medium'
+          border={{ color: 'border', size: 'xsmall' }}
+          elevation='small'
+          width='medium'
+          align='center'
         >
-          <Heading level={3} margin={{ vertical: '6px', horizontal: '12px' }}>
-            Nouveau rendez-vous
-          </Heading>
-          {/* <FormField name='date' label='Date'> */}
-          {/* <DateInput name='date' format='dd/mm/yyyy' /> */}
-          <DateTimeDrop state={client_reg} setClientReg={setClientReg} />
-          {/* </FormField> */}
-          {/* <Box direction='row' justify='between'>
-            <FormField name='time_start' label='Début'>
+          <Form
+            as='form'
+            value={appointment}
+            onChange={newValue => {
+              setAppointment(newValue);
+            }}
+            onSubmit={event => {
+              event.preventDefault();
+              AddAppointment(appointment);
+            }}
+          >
+            <Heading level={3} margin={{ vertical: '6px', horizontal: '12px' }}>
+              Nouveau rendez-vous
+            </Heading>
+            <DateTimeDrop state={appointment} setAppointment={setAppointment} />
+            <FormField label='Prénom' name='firstName'>
+              <TextInput name='firstName' />
+            </FormField>
+            <FormField label='Nom' name='lastName'>
+              <TextInput name='lastName' />
+            </FormField>
+            <FormField label='Email' name='email' required>
               <MaskedInput
-                name='time_start'
+                name='email'
+                type='email'
                 mask={[
-                  {
-                    length: [1, 2],
-                    options: [
-                      '08',
-                      '09',
-                      '10',
-                      '11',
-                      '13',
-                      '14',
-                      '15',
-                      '16',
-                      '17'
-                    ],
-                    regexp: /^1[1-2]$|^[0-9]$/,
-                    placeholder: 'hh'
-                  },
-                  { fixed: ':' },
-                  {
-                    length: 2,
-                    options: ['00', '05', '15', '30', '45'],
-                    regexp: /^[0-5][0-9]$|^[0-9]$/,
-                    placeholder: 'mm'
-                  }
+                  { regexp: /^[\w\-_.]+$/, placeholder: 'exemple' },
+                  { fixed: '@' },
+                  { regexp: /^[\w]+$/, placeholder: 'gmail' },
+                  { fixed: '.' },
+                  { regexp: /^[\w]+$/, placeholder: 'com' }
                 ]}
               />
             </FormField>
-            <FormField name='time_end' label='Fin'>
-              <MaskedInput
-                name='time_end'
-                mask={[
-                  {
-                    length: [1, 2],
-                    options: [
-                      '8',
-                      '9',
-                      '10',
-                      '11',
-                      '13',
-                      '14',
-                      '15',
-                      '16',
-                      '17'
-                    ],
-                    regexp: /^1[1-2]$|^[0-9]$/,
-                    placeholder: 'hh'
-                  },
-                  { fixed: ':' },
-                  {
-                    length: 2,
-                    options: ['00', '05', '15', '30', '45'],
-                    regexp: /^[0-5][0-9]$|^[0-9]$/,
-                    placeholder: 'mm'
-                  }
-                ]}
-              />
-            </FormField>
-          </Box> */}
-          <FormField label='Prénom' name='firstName'>
-            <TextInput name='firstName' />
-          </FormField>
-          <FormField label='Nom' name='lastName'>
-            <TextInput name='lastName' />
-          </FormField>
-          <FormField label='Email' name='email' required>
-            <MaskedInput
-              name='email'
-              mask={[
-                { regexp: /^[\w\-_.]+$/, placeholder: 'exemple' },
-                { fixed: '@' },
-                { regexp: /^[\w]+$/, placeholder: 'gmail' },
-                { fixed: '.' },
-                { regexp: /^[\w]+$/, placeholder: 'com' }
-              ]}
-            />
-          </FormField>
-          <Box direction='row' justify='center' margin={{ top: 'medium' }}>
-            <Button type='submit' label={'Inviter'} />
-          </Box>
-        </Form>
+            <Box direction='row' justify='center' margin={{ top: 'medium' }}>
+              <Button type='submit' label={'Inviter'} />
+            </Box>
+          </Form>
+        </Box>
       </Box>
-    </Box>
+    )
   );
 };
