@@ -12,18 +12,16 @@ import {
   FormField,
   Button,
   TextInput,
-  Heading
+  Heading,
 } from 'grommet';
 
 import DateTimeDrop from '../../components/DateTimeDrop';
 import { navigate } from 'raviger';
 
-const AddAppointment = async appointment => {
+const AddAppointment = async (appointment) => {
   const { firstName, lastName, uuid, email } = { ...appointment };
   const [hour, minute] = appointment.timeStart.split(':');
-  const start = moment(appointment.date)
-    .set({ hour, minute })
-    .toISOString();
+  const start = moment(appointment.date).set({ hour, minute }).toISOString();
 
   try {
     await appointmentService.add({
@@ -32,7 +30,7 @@ const AddAppointment = async appointment => {
       calendar: uuid,
       email,
       start,
-      description: 'test'
+      description: 'test',
     });
   } catch (error) {
     console.log(error);
@@ -40,20 +38,6 @@ const AddAppointment = async appointment => {
 };
 
 export default ({ uuid }) => {
-  const APPOINTMENT_FIELDS = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    date: '',
-    timeStart: '',
-    uuid
-  };
-
-  const [appointment, setAppointment] = useState(APPOINTMENT_FIELDS);
-  const [calendar, setCalendar] = useState({
-    name: ''
-  });
-
   useEffect(() => {
     async function fetchCalendarName() {
       try {
@@ -67,6 +51,20 @@ export default ({ uuid }) => {
 
     fetchCalendarName(uuid);
   }, [uuid]);
+
+  const APPOINTMENT_FIELDS = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    date: '',
+    timeStart: '',
+    uuid,
+  };
+
+  const [appointment, setAppointment] = useState(APPOINTMENT_FIELDS);
+  const [calendar, setCalendar] = useState({
+    name: '',
+  });
 
   return (
     calendar.name.length > 0 && (
@@ -83,10 +81,10 @@ export default ({ uuid }) => {
           <Form
             as='form'
             value={appointment}
-            onChange={newValue => {
+            onChange={(newValue) => {
               setAppointment(newValue);
             }}
-            onSubmit={event => {
+            onSubmit={(event) => {
               event.preventDefault();
               AddAppointment(appointment);
             }}
@@ -110,7 +108,7 @@ export default ({ uuid }) => {
                   { fixed: '@' },
                   { regexp: /^[\w]+$/, placeholder: 'gmail' },
                   { fixed: '.' },
-                  { regexp: /^[\w]+$/, placeholder: 'com' }
+                  { regexp: /^[\w]+$/, placeholder: 'com' },
                 ]}
               />
             </FormField>

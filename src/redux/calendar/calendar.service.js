@@ -7,3 +7,9 @@ export const add = async (name) => {
 
   return response;
 };
+
+export const getAll = async () => {
+  const response = await instance.get('/calendar?sort=name');
+
+  return response;
+};

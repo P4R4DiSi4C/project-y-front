@@ -1,2 +1,2 @@
-export const ADD_CALENDAR = 'ADD_CALENDAR';
+export const GET_ALL_CALENDARS = 'GET_ALL_CALENDARS';
 export const CALENDAR_CLEAR = 'CALENDAR_CLEAR';
