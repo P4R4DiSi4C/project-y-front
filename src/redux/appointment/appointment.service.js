@@ -1,7 +1,5 @@
-import instance from '../../axios';
+import ServiceMaker from '../service.maker';
+import Routes from './appointment.routes';
 
-export const add = async (appointment) => {
-  const response = await instance.post('/appointment', appointment);
 
-  return response;
-};
+export default ServiceMaker(Routes);

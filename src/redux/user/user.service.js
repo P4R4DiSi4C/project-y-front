@@ -1,13 +1,4 @@
-import instance from '../../axios';
+import ServiceMaker from '../service.maker';
+import Routes from './user.routes';
 
-export const signUp = async user => {
-  const response = await instance.post('/user/signup', user);
-
-  return response;
-};
-
-export const signIn = async user => {
-  const response = await instance.post('/user/signin', user);
-
-  return response;
-};
+export default ServiceMaker(Routes);

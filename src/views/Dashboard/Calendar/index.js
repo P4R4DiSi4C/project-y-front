@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import { getAllCalendars } from '../../../redux/calendar/calendar.actions';
+import { getAll } from '../../../redux/calendar/calendar.actions';
 import moment from 'moment';
 import 'moment/locale/fr';
+import { getAppointments } from '../../../redux/appointment/appointment.actions';
 
 // styles
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -41,48 +42,53 @@ export default () => {
   const dispatch = useDispatch();
 
   const calendars = useSelector((state) => state.calendar);
+  const appointments = useSelector((state) => state.appointment);
+
   const [selectedCalendar, setSelectedCalendar] = useState('');
 
   useEffect(() => {
-    dispatch(getAllCalendars());
+    dispatch(getAll());
   }, [dispatch]);
 
   useEffect(() => {
     if (calendars.length > 0) {
       setSelectedCalendar(calendars[0]._id);
+      dispatch(getAppointments(calendars[0]._id));
     }
-  }, [calendars]);
+  }, [dispatch, calendars]);
 
   return (
-    <>
-      <Box fill round='small'>
-        <Box align='center' justify='center'>
-          <Select
-            labelKey='label'
-            valueKey={{ key: 'value', reduce: true }}
-            options={calendars.map((calendar) => ({
-              label: calendar.name,
-              value: calendar._id,
-            }))}
-            value={selectedCalendar}
-            onChange={({ value }) => setSelectedCalendar(value)}
-          />
+    calendars.length > 0 && (
+      <>
+        <Box fill round='small'>
+          <Box align='center' justify='center'>
+            <Select
+              labelKey='label'
+              valueKey={{ key: 'value', reduce: true }}
+              options={calendars.map((calendar) => ({
+                label: calendar.name,
+                value: calendar._id,
+              }))}
+              value={selectedCalendar}
+              onChange={({ value }) => setSelectedCalendar(value)}
+            />
+          </Box>
+          <Box fill>
+            <Calendar
+              localizer={localizer}
+              events={[
+                {
+                  id: 0,
+                  title: 'Hey Sach',
+                  start: moment('2020-07-22T09').toDate(),
+                  end: moment('2020-07-22T10').toDate(),
+                },
+              ]}
+              messages={messages}
+            />
+          </Box>
         </Box>
-        <Box fill>
-          <Calendar
-            localizer={localizer}
-            events={[
-              {
-                id: 0,
-                title: 'Hey Sach',
-                start: moment('2020-07-22T09').toDate(),
-                end: moment('2020-07-22T10').toDate(),
-              },
-            ]}
-            messages={messages}
-          />
-        </Box>
-      </Box>
-    </>
+      </>
+    )
   );
 };

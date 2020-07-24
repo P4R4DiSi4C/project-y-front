@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import instance from '../../axios';
 import moment from 'moment';
-import * as appointmentService from '../../redux/appointment/appointment.service';
+import appointmentService from '../../redux/appointment/appointment.service';
 
 // components
 import {
