@@ -1,17 +1,21 @@
 // libs
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import { getAll } from '../../../redux/calendar/calendar.actions';
 import moment from 'moment';
 import 'moment/locale/fr';
+
+// redux
+import { getAll } from '../../../redux/calendar/calendar.actions';
 import { getAppointments } from '../../../redux/appointment/appointment.actions';
 
 // styles
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // components
-import { Box, Select } from 'grommet';
+import { Box, Button, Select, Text } from 'grommet';
+import { Add } from 'grommet-icons';
+import AddCalendar from '../../../components/Modals/AddCalendar';
 
 // localizer
 const localizer = momentLocalizer(moment);
@@ -45,22 +49,32 @@ export default () => {
   const appointments = useSelector((state) => state.appointment);
 
   const [selectedCalendar, setSelectedCalendar] = useState('');
+  const [forbidden, setForbidden] = useState(false);
+  const [addCalModal, setAddCalModal] = useState(false);
+
+
+  const setCalEvents = useCallback(
+    (id) => {
+      setSelectedCalendar(id);
+      dispatch(getAppointments(id));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    dispatch(getAll());
+    dispatch(getAll()).catch((error) => setForbidden(true));
   }, [dispatch]);
 
   useEffect(() => {
     if (calendars.length > 0) {
-      setSelectedCalendar(calendars[0]._id);
-      dispatch(getAppointments(calendars[0]._id));
+      setCalEvents(calendars[0]._id);
     }
-  }, [dispatch, calendars]);
+  }, [setCalEvents, calendars]);
 
   return (
-    calendars.length > 0 && (
-      <>
-        <Box fill round='small'>
+    <Box fill justify='center' round='small'>
+      {calendars.length > 0 && (
+        <>
           <Box align='center' justify='center'>
             <Select
               labelKey='label'
@@ -70,7 +84,7 @@ export default () => {
                 value: calendar._id,
               }))}
               value={selectedCalendar}
-              onChange={({ value }) => setSelectedCalendar(value)}
+              onChange={({ value }) => setCalEvents(value)}
             />
           </Box>
           <Box fill>
@@ -87,8 +101,28 @@ export default () => {
               messages={messages}
             />
           </Box>
+        </>
+      )}
+      {forbidden && (
+        <Box align='center' justify='center'>
+          IL FAUT T'ABONNER
         </Box>
-      </>
-    )
+      )}
+      {calendars.length <= 0 && !forbidden &&
+        <Box align='center' justify='center'>
+          <Button
+            size='large'
+            icon={<Add />}
+            label={
+              <Text>
+                <strong>Ajouter un calendrier</strong>
+              </Text>
+            }
+            onClick={() => setAddCalModal(true)}
+          />
+          {addCalModal && <AddCalendar setModal={setAddCalModal} />}
+        </Box>
+      }
+    </Box>
   );
 };

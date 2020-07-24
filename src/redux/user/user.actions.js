@@ -1,7 +1,7 @@
 import userService from './user.service';
 import { alertSuccess } from '../alert/alert.actions';
-import { LOGIN_REQUEST, USER_CLEAR, SET_USER_STATE } from './user.constants';
-import { CALENDAR_CLEAR } from '../calendar/calendar.constants';
+import { LOGIN_REQUEST, SET_USER_STATE } from './user.constants';
+import { LOGOUT } from '../root.constants';
 import { navigate } from 'raviger';
 import { setAxiosUserToken } from '../../axios';
 
@@ -29,10 +29,7 @@ export const logOut = () => async (dispatch) => {
   localStorage.removeItem('user');
 
   dispatch({
-    type: USER_CLEAR,
-  });
-  dispatch({
-    type: CALENDAR_CLEAR,
+    type: LOGOUT,
   });
 
   navigate('/');
