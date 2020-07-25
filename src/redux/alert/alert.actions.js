@@ -6,13 +6,13 @@ export const alertSuccess = message => dispatch => {
     type: ALERT_SUCCESS,
     payload: {
       type: ALERT_SUCCESS,
-      message: message
+      message
     }
   });
 
-  toast.success(message, {
+  toast.success(message/*, {
     onClose: () => dispatch(alertClear())
-  });
+  }*/);
 };
 
 export const alertError = message => dispatch => {
@@ -20,13 +20,13 @@ export const alertError = message => dispatch => {
     type: ALERT_ERROR,
     payload: {
       type: ALERT_ERROR,
-      message: message
+      message
     }
   });
 
-  toast.error(message, {
+  toast.error(message/*, {
     onClose: () => dispatch(alertClear())
-  });
+  }*/);
 };
 
 export const alertClear = () => dispatch => {

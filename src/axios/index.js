@@ -1,11 +1,23 @@
 import axios from 'axios';
 import store from '../redux/store';
 
-import { alertError } from '../redux/alert/alert.actions';
+import { alertClear, alertError } from '../redux/alert/alert.actions';
 import { logOut } from '../redux/user/user.actions';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080'
+});
+
+instance.interceptors.request.use(config => {
+  // Do something before request is sent
+
+  // Clear errors
+  //store.dispatch(alertClear());
+
+  return config;
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error);
 });
 
 instance.interceptors.response.use(
