@@ -1,14 +1,25 @@
 // libs
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+// redux
+import { getAllAppointments } from '../../../redux/appointment/appointment.actions';
 
 // components
-import { Box, Heading, List, Menu, Text } from 'grommet';
+import { Box, Grid, Heading, List, Menu, Text, ResponsiveContext } from 'grommet';
 
 // icons
-import { Grommet, More, Checkmark, Close, Edit } from 'grommet-icons';
+import { More, Checkmark, Close, Edit } from 'grommet-icons';
 
 export default () => {
-  const [selected, setSelected] = React.useState();
+  const dispatch = useDispatch();
+
+  const appointments = useSelector((state) => state.appointment);
+  const sizeContext = useContext(ResponsiveContext);
+
+  useEffect(() => {
+    dispatch(getAllAppointments({ approved: false })).catch((error) => console.log(error));
+  }, [dispatch]);
 
   return (
     <Box fill direction="column">
@@ -22,106 +33,41 @@ export default () => {
       <Box fill direction="column" overflow={{ vertical: 'auto' }}>
         <List
           pad="small"
-          data={[
-            {
-              name: 'Sacha Bonsoir',
-              date: '10 juin à 12h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'David Bonjour',
-              date: '10 juin à 10h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Ryan Trump',
-              date: '11 juin à 14h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            },
-            {
-              name: 'Manu Macron',
-              date: '12 juin à 15h00',
-              email: 'sacha.bonsoir@hotmail.be',
-              tel: '076 399 02 03'
-            }
-          ]}
-          /*itemProps={
-              selected >= 0 ? { [selected]: { background: "brand" } } : undefined
-            }*/
-          onClickItem={event =>
-            setSelected(selected === event.index ? undefined : event.index)
-          }
+          data={appointments}
         >
           {(datum, index) => (
-            <Box
+            <Grid
               key={index}
-              direction="row-responsive"
-              justify="between"
-              align="center"
+              align='center'
+              columns={{
+                count: sizeContext !== 'small' ? 3 : 'fill',
+                size: 'auto',
+                justifyContent: 'between'
+              }}
             >
-              <Box direction="row-responsive" align="center" gap="small">
-                <Grommet color="status-unknown" />
-                <Box direction="column">
-                  <Text>{datum.name}</Text>
-                  <Text>{datum.email}</Text>
-                  <Text>{datum.tel}</Text>
-                </Box>
+              <Box>
+                <Text>{datum.firstName + ' ' + datum.lastName}</Text>
+                <Text>{datum.email + 'TES2222T'}</Text>
+                <Text>{datum.tel + 'TES222T'}</Text>
               </Box>
-              <Box direction="column">
-                <Text>{datum.date}</Text>
+              <Box align='center'>
+                <Text>{datum.start}</Text>
               </Box>
-              <Menu
-                key={index}
-                icon={<More color="brand" />}
-                alignSelf="center"
-                justifyContent="center"
-                hoverIndicator
-                items={[
-                  { icon: <Checkmark color="status-ok" /> },
-                  { icon: <Close color="status-critical" /> },
-                  { icon: <Edit color="status-warning" /> }
-                ]}
-              />
-            </Box>
+              <Box align='end'>
+                <Menu
+                  key={index}
+                  icon={<More color="brand" />}
+                  alignSelf={sizeContext !== 'small' ? 'end' : 'center'}
+                  justifyContent="center"
+                  hoverIndicator
+                  items={[
+                    { icon: <Checkmark color="status-ok" /> },
+                    { icon: <Close color="status-critical" /> },
+                    { icon: <Edit color="status-warning" /> }
+                  ]}
+                />
+              </Box>
+            </Grid>
           )}
         </List>
       </Box>

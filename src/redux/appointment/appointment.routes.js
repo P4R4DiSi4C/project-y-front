@@ -15,5 +15,11 @@ export default {
         calendar: uuid,
       }
     };
+  },
+  getAll: (params) => {
+    return {
+      url: APPOINTMENT_ROOT,
+      params
+    };
   }
 };

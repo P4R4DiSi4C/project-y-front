@@ -13,13 +13,14 @@ import {
   Button,
   TextInput,
   Heading,
+  TextArea,
 } from 'grommet';
 
 import DateTimeDrop from '../../components/DateTimeDrop';
 import { navigate } from 'raviger';
 
 const AddAppointment = async (appointment) => {
-  const { firstName, lastName, uuid, email } = { ...appointment };
+  const { firstName, lastName, uuid, email, description, address, tel } = { ...appointment };
   const [hour, minute] = appointment.timeStart.split(':');
   const start = moment(appointment.date).set({ hour, minute }).toISOString();
 
@@ -30,7 +31,9 @@ const AddAppointment = async (appointment) => {
       calendar: uuid,
       email,
       start,
-      description: 'test',
+      description,
+      address,
+      tel
     });
   } catch (error) {
     console.log(error);
@@ -58,7 +61,10 @@ export default ({ uuid }) => {
     lastName: '',
     date: '',
     timeStart: '',
+    description: '',
     uuid,
+    address: '',
+    tel: ''
   };
 
   const [appointment, setAppointment] = useState(APPOINTMENT_FIELDS);
@@ -111,6 +117,18 @@ export default ({ uuid }) => {
                   { regexp: /^[\w]+$/, placeholder: 'com' },
                 ]}
               />
+            </FormField>
+            <FormField label='Description' name='description' required>
+              <TextArea
+                placeholder='Détails du rendez-vous...'
+                name='description'
+              />
+            </FormField>
+            <FormField label='Adresse' name='address'>
+              <TextInput name='address' />
+            </FormField>
+            <FormField label='Tel.' name='tel'>
+              <TextInput name='tel' />
             </FormField>
             <Box direction='row' justify='center' margin={{ top: 'medium' }}>
               <Button type='submit' label={'Inviter'} />
