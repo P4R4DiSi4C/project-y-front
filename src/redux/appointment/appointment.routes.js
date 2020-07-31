@@ -8,6 +8,13 @@ export default {
       data
     };
   },
+  approval: (uuid, data) => {
+    return {
+      method: 'patch',
+      url: APPOINTMENT_ROOT + '/' + uuid,
+      data
+    };
+  },
   getByCalendar: (uuid) => {
     return {
       url: APPOINTMENT_ROOT,

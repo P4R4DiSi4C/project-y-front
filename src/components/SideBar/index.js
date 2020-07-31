@@ -25,19 +25,15 @@ export default ({ baseUrl }) => {
 			round='small'
 			border={{ color: 'border', size: 'xsmall' }}
 			header={
-				<>
 					<Avatar border={{ size: 'small', color: 'brand' }} background='white'>
 						Y
 					</Avatar>
-				</>
 			}
 			footer={
-				<>
 					<Nav gap='small'>
 						<Button icon={<Configure />} hoverIndicator />
 						<Button icon={<Help />} hoverIndicator />
 					</Nav>
-				</>
 			}
 		>
 			<Nav gap='small'>

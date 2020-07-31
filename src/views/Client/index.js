@@ -1,8 +1,10 @@
 // libs
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import instance from '../../axios';
 import moment from 'moment';
 import appointmentService from '../../redux/appointment/appointment.service';
+import { alertSuccess } from '../../redux/alert/alert.actions';
 
 // components
 import {
@@ -19,9 +21,9 @@ import {
 import DateTimeDrop from '../../components/DateTimeDrop';
 import { navigate } from 'raviger';
 
-const AddAppointment = async (appointment) => {
+const AddAppointment = async (appointment, dispatch) => {
   const { firstName, lastName, uuid, email, description, address, tel } = { ...appointment };
-  const [hour, minute] = appointment.timeStart.split(':');
+  const [hour, minute] = appointment.hour.split(':');
   const start = moment(appointment.date).set({ hour, minute }).toISOString();
 
   try {
@@ -35,12 +37,15 @@ const AddAppointment = async (appointment) => {
       address,
       tel
     });
+
+    dispatch(alertSuccess('Invitation envoyée !'));
   } catch (error) {
     console.log(error);
   }
 };
 
 export default ({ uuid }) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     async function fetchCalendarName() {
       try {
@@ -60,7 +65,7 @@ export default ({ uuid }) => {
     firstName: '',
     lastName: '',
     date: '',
-    timeStart: '',
+    hour: '',
     description: '',
     uuid,
     address: '',
@@ -85,14 +90,13 @@ export default ({ uuid }) => {
           align='center'
         >
           <Form
-            as='form'
             value={appointment}
             onChange={(newValue) => {
               setAppointment(newValue);
             }}
             onSubmit={(event) => {
               event.preventDefault();
-              AddAppointment(appointment);
+              AddAppointment(appointment, dispatch);
             }}
           >
             <Heading level={3} margin={{ vertical: '6px', horizontal: '12px' }}>

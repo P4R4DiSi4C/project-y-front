@@ -30,9 +30,9 @@ const DropContent = ({ state, setAppointment }) => {
           firstDayOfWeek={1}
         />
       </Box>
-      <FormField name='timeStart' label='Heure'>
+      <FormField name='hour' label='Heure'>
         <MaskedInput
-          name='timeStart'
+          name='hour'
           mask={[
             {
               length: [1, 2],
@@ -72,7 +72,7 @@ export default ({ state, setAppointment }) => {
           <Text color={state.date ? undefined : 'dark-5'}>
             {state.date
               ? `${new Date(state.date).toLocaleDateString()} ${
-              state.timeStart
+              state.hour
               }`
               : 'Date et heure'}
           </Text>
