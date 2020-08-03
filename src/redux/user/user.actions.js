@@ -8,7 +8,7 @@ import { setAxiosUserToken } from '../../axios';
 export const signUp = (user) => async (dispatch) => {
   await userService.signUp(user);
 
-  dispatch(alertSuccess('Inscription réussie'));
+  alertSuccess('Inscription réussie');
 };
 
 export const signIn = (user) => async (dispatch) => {
@@ -18,7 +18,7 @@ export const signIn = (user) => async (dispatch) => {
     type: LOGIN_REQUEST,
     payload: response,
   });
-  dispatch(alertSuccess('Connexion réussie'));
+  alertSuccess('Connexion réussie');
 
   setAxiosUserToken(response.token);
   localStorage.setItem('user', JSON.stringify(response));

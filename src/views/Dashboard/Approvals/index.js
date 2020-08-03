@@ -68,11 +68,11 @@ export default () => {
               >
                 <Box>
                   <Text>{datum.firstName + ' ' + datum.lastName}</Text>
-                  <Text>{datum.email + 'TES2222T'}</Text>
-                  <Text>{datum.tel + 'TES222T'}</Text>
+                  <Text>{datum.email}</Text>
+                  <Text>{datum.phone}</Text>
                 </Box>
                 <Box align='center'>
-                  <Text>{datum.start}</Text>
+                  <Text>{moment(datum.start).format("DD MMMM - HH[h]mm")}</Text>
                 </Box>
                 <Box align='end'>
                   <Menu

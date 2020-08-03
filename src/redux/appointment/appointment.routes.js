@@ -15,11 +15,12 @@ export default {
       data
     };
   },
-  getByCalendar: (uuid) => {
+  getByCalendar: (uuid, params) => {
     return {
       url: APPOINTMENT_ROOT,
       params: {
         calendar: uuid,
+        ...params
       }
     };
   },

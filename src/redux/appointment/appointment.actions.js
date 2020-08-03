@@ -2,8 +2,8 @@ import { GET_APPOINTMENTS, GET_ALL_APPOINTMENTS } from './appointment.constants'
 import { alertSuccess } from '../alert/alert.actions';
 import appointmentService from './appointment.service';
 
-export const getAppointments = (uuid) => async (dispatch) => {
-  const response = await appointmentService.getByCalendar(uuid);
+export const getAppointments = (uuid, params) => async (dispatch) => {
+  const response = await appointmentService.getByCalendar(uuid, params);
 
   dispatch({
     type: GET_APPOINTMENTS,
@@ -26,5 +26,5 @@ export const approvalAppointment = (params) => async (dispatch) => {
   await appointmentService.approval(uuid, { end, approved });
 
   dispatch(getAllAppointments({ approved: false }));
-  dispatch(alertSuccess('Evénement approuvé !'));
+  alertSuccess('Evénement approuvé !');
 };

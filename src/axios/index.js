@@ -1,24 +1,21 @@
 import axios from 'axios';
 import store from '../redux/store';
 
-import { alertClear, alertError } from '../redux/alert/alert.actions';
+import { alertError } from '../redux/alert/alert.actions';
 import { logOut } from '../redux/user/user.actions';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080'
 });
 
-instance.interceptors.request.use(config => {
+/*instance.interceptors.request.use(config => {
   // Do something before request is sent
-
-  // Clear errors
-  //store.dispatch(alertClear());
 
   return config;
 }, function (error) {
   // Do something with request error
   return Promise.reject(error);
-});
+});*/
 
 instance.interceptors.response.use(
   response => {
@@ -29,21 +26,21 @@ instance.interceptors.response.use(
       if (error.response.status === 401) {
         switch (error.response.data) {
           case 'ERROR_USER_NOT_FOUND':
-            store.dispatch(alertError('Compte introuvable !'));
+            alertError('Compte introuvable !');
             break;
 
           case 'ERROR_INVALID_TOKEN_PERMISSION':
-            store.dispatch(alertError("Vous n'avez pas la permission !"));
+            alertError("Vous n'avez pas la permission !");
             break;
 
           default:
-            store.dispatch(alertError('Votre session a expirée.'));
+            alertError('Votre session a expirée.');
             store.dispatch(logOut());
             break;
         }
       }
     } else {
-      store.dispatch(alertError(error.message || error.response.data));
+      alertError(error.message || error.response.data);
     }
     return Promise.reject(error);
   }

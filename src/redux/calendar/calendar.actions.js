@@ -7,7 +7,7 @@ export const addCalendar = (name) => async (dispatch) => {
 
   dispatch(getAll());
 
-  dispatch(alertSuccess('Calendrier ajouté !'));
+  alertSuccess('Calendrier ajouté !');
 };
 
 export const getAll = () => async (dispatch) => {

@@ -22,7 +22,7 @@ import DateTimeDrop from '../../components/DateTimeDrop';
 import { navigate } from 'raviger';
 
 const AddAppointment = async (appointment, dispatch) => {
-  const { firstName, lastName, uuid, email, description, address, tel } = { ...appointment };
+  const { firstName, lastName, uuid, email, description, address, phone } = { ...appointment };
   const [hour, minute] = appointment.hour.split(':');
   const start = moment(appointment.date).set({ hour, minute }).toISOString();
 
@@ -35,10 +35,10 @@ const AddAppointment = async (appointment, dispatch) => {
       start,
       description,
       address,
-      tel
+      phone
     });
 
-    dispatch(alertSuccess('Invitation envoyée !'));
+    alertSuccess('Invitation envoyée !');
   } catch (error) {
     console.log(error);
   }
@@ -69,7 +69,7 @@ export default ({ uuid }) => {
     description: '',
     uuid,
     address: '',
-    tel: ''
+    phone: ''
   };
 
   const [appointment, setAppointment] = useState(APPOINTMENT_FIELDS);
@@ -131,8 +131,8 @@ export default ({ uuid }) => {
             <FormField label='Adresse' name='address'>
               <TextInput name='address' />
             </FormField>
-            <FormField label='Tel.' name='tel'>
-              <TextInput name='tel' />
+            <FormField label='Tel.' name='phone'>
+              <TextInput name='phone' />
             </FormField>
             <Box direction='row' justify='center' margin={{ top: 'medium' }}>
               <Button type='submit' label={'Inviter'} />
