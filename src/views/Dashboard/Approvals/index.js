@@ -26,7 +26,7 @@ export default () => {
     id: '',
     date: '',
     hour: '',
-    approved: false
+    approved: 0
   };
 
   const dispatch = useDispatch();
@@ -38,102 +38,199 @@ export default () => {
   const sizeContext = useContext(ResponsiveContext);
 
   useEffect(() => {
-    dispatch(getAllAppointments({ approved: false })).catch((error) => console.log(error));
+    dispatch(getAllAppointments({ approved: "0,1" })).catch((error) => console.log(error));
   }, [dispatch]);
 
   return (
-    <Box fill direction="column">
-      <Heading
-        level="3"
-        textAlign="start"
-        margin={{ top: 'none', bottom: '1rem' }}
-      >
-        Rendez-vous en attente
+    <Box
+      fill>
+      <Box basis="50%">
+        <Heading
+          level="3"
+          textAlign="start"
+          margin={{ top: 'none', bottom: '1rem' }}
+        >
+          Rendez-vous en attente
       </Heading>
-      <Box fill direction="column" overflow={{ vertical: 'auto' }}>
-        {appointments.length >= 0 &&
-          <List
-            pad="small"
-            data={appointments}
-          >
-            {(datum, index) => (
-              <Grid
-                key={index}
-                align='center'
-                columns={{
-                  count: sizeContext !== 'small' ? 3 : 'fill',
-                  size: 'auto',
-                  justifyContent: 'between'
-                }}
-              >
-                <Box>
-                  <Text>{datum.firstName + ' ' + datum.lastName}</Text>
-                  <Text>{datum.email}</Text>
-                  <Text>{datum.phone}</Text>
-                </Box>
-                <Box align='center'>
-                  <Text>{moment(datum.start).format("DD MMMM - HH[h]mm")}</Text>
-                </Box>
-                <Box align='end'>
-                  <Menu
-                    key={index}
-                    icon={<More color="brand" />}
-                    alignSelf={sizeContext !== 'small' ? 'end' : 'center'}
-                    justifyContent="center"
-                    hoverIndicator
-                    ref={el => refs.current[datum._id] = el}
-                    items={[
-                      {
-                        icon: <Checkmark color="status-ok" />,
-                        onClick: () => {
-                          setAppointment({
-                            ...appointment,
-                            uuid: datum._id,
-                            approved: true
-                          });
-                          setShowDrop(true);
-                        }
-                      },
-                      { icon: <Close color="status-critical" /> },
-                      { icon: <Edit color="status-warning" /> }
-                    ]}
-                  />
-                </Box>
-              </Grid>
-            )}
-          </List>}
-        {showDrop &&
-          <Drop
-            align={{ right: 'left' }}
-            target={refs.current[appointment.uuid]}
-            onClickOutside={() => setShowDrop(false)}
-          >
-            <Box
-              pad='medium'
-              align='center'
+        <Box fill direction="column" overflow={{ vertical: 'auto' }}>
+          {appointments.length >= 0 &&
+            <List
+              pad="small"
+            data={appointments.filter(appointment => appointment.approved === 0)}
             >
-              <Form
-                value={appointment}
-                onChange={(newValue) => {
-                  setAppointment(newValue);
-                }}
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  ApprovalAppointement(appointment, dispatch);
-                  setShowDrop(false);
-                }}
+              {(datum, index) => (
+                <Grid
+                  key={index}
+                  align='center'
+                  columns={{
+                    count: sizeContext !== 'small' ? 3 : 'fill',
+                    size: 'auto',
+                    justifyContent: 'between'
+                  }}
+                >
+                  <Box>
+                    <Text>{datum.firstName + ' ' + datum.lastName}</Text>
+                    <Text>{datum.email}</Text>
+                    <Text>{datum.phone}</Text>
+                  </Box>
+                  <Box align='center'>
+                    <Text>{moment(datum.start).format("DD MMMM - HH[h]mm")}</Text>
+                  </Box>
+                  <Box align='end'>
+                    <Menu
+                      key={index}
+                      icon={<More color="brand" />}
+                      alignSelf={sizeContext !== 'small' ? 'end' : 'center'}
+                      justifyContent="center"
+                      hoverIndicator
+                      ref={el => refs.current[datum._id] = el}
+                      items={[
+                        {
+                          icon: <Checkmark color="status-ok" />,
+                          onClick: () => {
+                            setAppointment({
+                              ...appointment,
+                              uuid: datum._id,
+                              approved: 2
+                            });
+                            setShowDrop(true);
+                          }
+                        },
+                        { icon: <Close color="status-critical" /> },
+                        { icon: <Edit color="status-warning" /> }
+                      ]}
+                    />
+                  </Box>
+                </Grid>
+              )}
+            </List>}
+          {showDrop &&
+            <Drop
+              align={{ right: 'left' }}
+              target={refs.current[appointment.uuid]}
+              onClickOutside={() => setShowDrop(false)}
+            >
+              <Box
+                pad='medium'
+                align='center'
               >
-                <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
-                  Date & heure de fin
+                <Form
+                  value={appointment}
+                  onChange={(newValue) => {
+                    setAppointment(newValue);
+                  }}
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    ApprovalAppointement(appointment, dispatch);
+                    setShowDrop(false);
+                  }}
+                >
+                  <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
+                    Date & heure de fin
                 </Heading>
-                <DateTimeDrop state={appointment} setAppointment={setAppointment} />
-                <Box direction='row' justify='center' margin={{ top: 'medium' }}>
-                  <Button type='submit' label={'Approuver'} />
-                </Box>
-              </Form>
-            </Box>
-          </Drop>
-        }
+                  <DateTimeDrop state={appointment} setAppointment={setAppointment} />
+                  <Box direction='row' justify='center' margin={{ top: 'medium' }}>
+                    <Button type='submit' label={'Approuver'} />
+                  </Box>
+                </Form>
+              </Box>
+            </Drop>
+          }
+        </Box>
+      </Box>
+      <Box
+        basis="50%">
+        <Heading
+          level="3"
+          textAlign="start"
+          margin={{ top: 'none', bottom: '1rem' }}>
+          Rendez-vous refusés
+      </Heading>
+        <Box fill direction="column" overflow={{ vertical: 'auto' }}>
+          {appointments.length >= 0 &&
+            <List
+              pad="small"
+              data={appointments.filter(appointment => appointment.approved === 1)}
+            >
+              {(datum, index) => (
+                <Grid
+                  key={index}
+                  align='center'
+                  columns={{
+                    count: sizeContext !== 'small' ? 3 : 'fill',
+                    size: 'auto',
+                    justifyContent: 'between'
+                  }}
+                >
+                  <Box>
+                    <Text>{datum.firstName + ' ' + datum.lastName}</Text>
+                    <Text>{datum.email}</Text>
+                    <Text>{datum.phone}</Text>
+                  </Box>
+                  <Box align='center'>
+                    <Text>{moment(datum.start).format("DD MMMM - HH[h]mm")}</Text>
+                  </Box>
+                  <Box align='end'>
+                    <Menu
+                      key={index}
+                      icon={<More color="brand" />}
+                      alignSelf={sizeContext !== 'small' ? 'end' : 'center'}
+                      justifyContent="center"
+                      hoverIndicator
+                      ref={el => refs.current[datum._id] = el}
+                      items={[
+                        {
+                          icon: <Checkmark color="status-ok" />,
+                          onClick: () => {
+                            setAppointment({
+                              ...appointment,
+                              uuid: datum._id,
+                              approved: 2
+                            });
+                            setShowDrop(true);
+                          }
+                        },
+                        { icon: <Close color="status-critical" /> },
+                        { icon: <Edit color="status-warning" /> }
+                      ]}
+                    />
+                  </Box>
+                </Grid>
+              )}
+            </List>}
+          {showDrop &&
+            <Drop
+              align={{ right: 'left' }}
+              target={refs.current[appointment.uuid]}
+              onClickOutside={() => setShowDrop(false)}
+            >
+              <Box
+                pad='medium'
+                align='center'
+              >
+                <Form
+                  value={appointment}
+                  onChange={(newValue) => {
+                    setAppointment(newValue);
+                  }}
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    ApprovalAppointement(appointment, dispatch);
+                    setShowDrop(false);
+                  }}
+                >
+                  <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
+                    Date & heure de fin
+                </Heading>
+                  <DateTimeDrop state={appointment} setAppointment={setAppointment} />
+                  <Box direction='row' justify='center' margin={{ top: 'medium' }}>
+                    <Button type='submit' label={'Approuver'} />
+                  </Box>
+                </Form>
+              </Box>
+            </Drop>
+          }
+        </Box>
       </Box>
     </Box>
   );

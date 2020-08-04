@@ -56,7 +56,7 @@ export default () => {
   const setCalEvents = useCallback(
     (id) => {
       setSelectedCalendar(id);
-      dispatch(getAppointments(id, { approved: true }));
+      dispatch(getAppointments(id, { approved: 2 }));
     },
     [dispatch]
   );
