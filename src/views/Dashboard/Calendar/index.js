@@ -47,7 +47,7 @@ export default () => {
 
   const calendars = useSelector((state) => state.calendar);
   const appointments = useSelector((state) => state.appointment);
-
+  console.log(appointments);
   const [selectedCalendar, setSelectedCalendar] = useState('');
   const [forbidden, setForbidden] = useState(false);
   const [addCalModal, setAddCalModal] = useState(false);

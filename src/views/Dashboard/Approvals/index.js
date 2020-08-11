@@ -56,7 +56,7 @@ export default () => {
           {appointments.length >= 0 &&
             <List
               pad="small"
-            data={appointments.filter(appointment => appointment.approved === 0)}
+              data={appointments.filter(appointment => appointment.approved === 0)}
             >
               {(datum, index) => (
                 <Grid
@@ -69,6 +69,7 @@ export default () => {
                   }}
                 >
                   <Box>
+                    <Text>{datum.description}</Text>
                     <Text>{datum.firstName + ' ' + datum.lastName}</Text>
                     <Text>{datum.email}</Text>
                     <Text>{datum.phone}</Text>
@@ -104,38 +105,6 @@ export default () => {
                 </Grid>
               )}
             </List>}
-          {showDrop &&
-            <Drop
-              align={{ right: 'left' }}
-              target={refs.current[appointment.uuid]}
-              onClickOutside={() => setShowDrop(false)}
-            >
-              <Box
-                pad='medium'
-                align='center'
-              >
-                <Form
-                  value={appointment}
-                  onChange={(newValue) => {
-                    setAppointment(newValue);
-                  }}
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    ApprovalAppointement(appointment, dispatch);
-                    setShowDrop(false);
-                  }}
-                >
-                  <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
-                    Date & heure de fin
-                </Heading>
-                  <DateTimeDrop state={appointment} setAppointment={setAppointment} />
-                  <Box direction='row' justify='center' margin={{ top: 'medium' }}>
-                    <Button type='submit' label={'Approuver'} />
-                  </Box>
-                </Form>
-              </Box>
-            </Drop>
-          }
         </Box>
       </Box>
       <Box
@@ -163,6 +132,7 @@ export default () => {
                   }}
                 >
                   <Box>
+                    <Text>{datum.description}</Text>
                     <Text>{datum.firstName + ' ' + datum.lastName}</Text>
                     <Text>{datum.email}</Text>
                     <Text>{datum.phone}</Text>
@@ -198,40 +168,40 @@ export default () => {
                 </Grid>
               )}
             </List>}
-          {showDrop &&
-            <Drop
-              align={{ right: 'left' }}
-              target={refs.current[appointment.uuid]}
-              onClickOutside={() => setShowDrop(false)}
-            >
-              <Box
-                pad='medium'
-                align='center'
-              >
-                <Form
-                  value={appointment}
-                  onChange={(newValue) => {
-                    setAppointment(newValue);
-                  }}
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    ApprovalAppointement(appointment, dispatch);
-                    setShowDrop(false);
-                  }}
-                >
-                  <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
-                    Date & heure de fin
-                </Heading>
-                  <DateTimeDrop state={appointment} setAppointment={setAppointment} />
-                  <Box direction='row' justify='center' margin={{ top: 'medium' }}>
-                    <Button type='submit' label={'Approuver'} />
-                  </Box>
-                </Form>
-              </Box>
-            </Drop>
-          }
         </Box>
       </Box>
+      {showDrop &&
+        <Drop
+          align={{ right: 'left' }}
+          target={refs.current[appointment.uuid]}
+          onClickOutside={() => setShowDrop(false)}
+        >
+          <Box
+            pad='medium'
+            align='center'
+          >
+            <Form
+              value={appointment}
+              onChange={(newValue) => {
+                setAppointment(newValue);
+              }}
+              onSubmit={(event) => {
+                event.preventDefault();
+                ApprovalAppointement(appointment, dispatch);
+                setShowDrop(false);
+              }}
+            >
+              <Heading level={4} margin={{ vertical: '6px', horizontal: '12px' }}>
+                Date & heure de fin
+                </Heading>
+              <DateTimeDrop state={appointment} setAppointment={setAppointment} />
+              <Box direction='row' justify='center' margin={{ top: 'medium' }}>
+                <Button type='submit' label={'Approuver'} />
+              </Box>
+            </Form>
+          </Box>
+        </Drop>
+      }
     </Box>
   );
 };
