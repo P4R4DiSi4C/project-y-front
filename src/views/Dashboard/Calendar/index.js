@@ -87,17 +87,23 @@ export default () => {
               onChange={({ value }) => setCalEvents(value)}
             />
           </Box>
-          <Box fill>
-            <Calendar
-              localizer={localizer}
-              events={[
+           {/* [
                 {
                   id: 0,
                   title: 'Hey Sach',
                   start: moment('2020-07-22T09').toDate(),
                   end: moment('2020-07-22T10').toDate(),
                 },
-              ]}
+              ]  */}
+          <Box fill>
+            <Calendar
+              localizer={localizer}
+              events={appointments.map(({ _id, description, start, end }) => ({
+                id: _id,
+                title: description,
+                start,
+                end
+              }))}
               messages={messages}
             />
           </Box>
